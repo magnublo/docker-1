@@ -38,25 +38,25 @@ RUN apt-get update && apt-get -y install \
   && rm -rf /var/lib/apt/lists/*
 
 # startup script and tmux configuration file
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/scripts/init.sh --output /usr/local/bin/init.sh && \
+RUN curl -sSL https://github.com/magnublo/docker-1/raw/master/metasploit/scripts/init.sh --output /usr/local/bin/init.sh && \
   chmod a+xr /usr/local/bin/init.sh && \
-  curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/tmux.conf --output /root/.tmux.conf
+  curl -sSL https://github.com/magnublo/docker-1/raw/master/metasploit/conf/tmux.conf --output /root/.tmux.conf
 
 # Get Metasploit
 RUN git clone https://github.com/rapid7/metasploit-framework.git msf
 WORKDIR msf
 
 # Install PosgreSQL
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/scripts/db.sql --output /tmp/db.sql
+RUN curl -sSL https://github.com/magnublo/docker-1/raw/master/metasploit/scripts/db.sql --output /tmp/db.sql
 RUN /etc/init.d/postgresql start && su postgres -c "psql -f /tmp/db.sql"
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/database.yml --output /opt/msf/config/database.yml
+RUN curl -sSL https://github.com/magnublo/docker-1/raw/master/metasploit/conf/database.yml --output /opt/msf/config/database.yml
 
 # RVM
 RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import
 RUN curl -L https://get.rvm.io | bash -s stable 
 RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.3.1"
-RUN /bin/bash -l -c "rvm use 2.3.1 --default"
+RUN /bin/bash -l -c "rvm install 2.5.6"
+RUN /bin/bash -l -c "rvm use 2.5.6 --default"
 RUN /bin/bash -l -c "source /usr/local/rvm/scripts/rvm"
 RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
 RUN /bin/bash -l -c "source /usr/local/rvm/scripts/rvm && which bundle"
