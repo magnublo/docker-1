@@ -53,12 +53,13 @@ RUN curl -sSL https://github.com/magnublo/docker-1/raw/master/metasploit/conf/da
 
 # RVM
 RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import
+RUN gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
 RUN curl -L https://get.rvm.io | bash -s stable 
 RUN /bin/bash -l -c "rvm requirements"
-RUN /bin/bash -l -c "rvm install 2.5.6"
-RUN /bin/bash -l -c "rvm use 2.5.6 --default"
+RUN /bin/bash -l -c "rvm install 2.6.5"
+RUN /bin/bash -l -c "rvm use 2.6.5 --default"
 RUN /bin/bash -l -c "source /usr/local/rvm/scripts/rvm"
-RUN /bin/bash -l -c "gem install bundler --no-ri --no-rdoc"
+RUN /bin/bash -l -c "gem install bundler"
 RUN /bin/bash -l -c "source /usr/local/rvm/scripts/rvm && which bundle"
 RUN /bin/bash -l -c "which bundle"
 
